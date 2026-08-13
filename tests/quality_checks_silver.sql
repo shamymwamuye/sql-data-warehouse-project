@@ -23,17 +23,22 @@ Usage:
 -- Table: silver.crm_cust_info
 -- Verify there are no NULLs or duplicates in the primary keys (expect no rows returned)
 SELECT 
+  cst_id
+FROM silver.crm_cust_info
+WHERE cst_id IS NULL;
+
+SELECT 
   cst_id,
-  COUNT(*)
+  COUNT(*) AS cnt
 FROM silver.crm_cust_info
 GROUP BY cst_id
-HAVING COUNT(*) > 1 OR cst_id IS NULL;
+HAVING COUNT(*) > 1;
 
 -- Identify values with leading or trailing spaces (expect no rows returned)
 SELECT
   cst_firstname
 FROM silver.crm_cust_info
-WHERE cst_firstname != TRIM(cst_firstname);
+WHERE cst_firstname <> TRIM(cst_firstname);
 
 -- Review distinct values for standardization and allowed values
 -- (expect a small, known set of values; investigate unexpected entries)
@@ -50,20 +55,25 @@ SELECT * FROM silver.crm_cust_info;
 -- Table: silver.crm_prd_info
 -- Verify there are no NULLs or duplicates in the primary keys (expect no rows returned)
 SELECT
+  prd_id
+FROM silver.crm_prd_info
+WHERE prd_id IS NULL;
+
+SELECT
   prd_id,
-  COUNT(*)
+  COUNT(*) AS cnt
 FROM silver.crm_prd_info
 GROUP BY prd_id
-HAVING COUNT(*) > 1 OR prd_id IS NULL;
+HAVING COUNT(*) > 1;
 
 -- Find product name or line values with unwanted leading/trailing spaces
 SELECT prd_nm
 FROM silver.crm_prd_info
-WHERE prd_nm != TRIM(prd_nm);
+WHERE prd_nm <> TRIM(prd_nm);
 
 SELECT prd_line
 FROM silver.crm_prd_info
-WHERE prd_line != TRIM(prd_line);
+WHERE prd_line <> TRIM(prd_line);
 
 -- Check for NULL or negative costs (expect no rows returned)
 SELECT prd_cost
@@ -90,7 +100,7 @@ SELECT
   sls_ship_dt,
   sls_due_dt
 FROM silver.crm_sales_details
-WHERE sls_order_dt = 0 OR sls_order_dt != 8 OR sls_order_dt > 20500101;
+WHERE sls_order_dt = 0 OR sls_order_dt <> 8 OR sls_order_dt > 20500101;
 
 -- Check logical ordering of dates: order <= ship <= due
 SELECT
@@ -123,7 +133,7 @@ SELECT * FROM silver.crm_sales_details;
 -- Verify there are no NULLs or duplicates in the primary keys (expect no rows returned)
 SELECT
   CID,
-  COUNT(*)
+  COUNT(*) AS cnt
 FROM silver.erp_cust_az12
 GROUP BY CID
 HAVING COUNT(*) > 1;
@@ -145,7 +155,7 @@ SELECT * FROM silver.erp_cust_az12;
 -- Verify there are no NULLs or duplicates in the primary keys (expect no rows returned)
 SELECT
   CID,
-  COUNT(*)
+  COUNT(*) AS cnt
 FROM silver.erp_loc_a101
 GROUP BY CID
 HAVING COUNT(*) > 1;
