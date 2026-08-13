@@ -20,8 +20,8 @@ Usage:
 ==================================================================================================
 */
 
--- Checking table: silver.crm_cust_info
--- Verify there are no NULLs or duplicate primary keys (expect no rows returned)
+-- Table: silver.crm_cust_info
+-- Verify there are no NULLs or duplicates in the primary keys (expect no rows returned)
 SELECT 
   cst_id,
   COUNT(*)
@@ -47,8 +47,8 @@ FROM silver.crm_cust_info;
 SELECT * FROM silver.crm_cust_info;
 
 
--- Checking table: silver.crm_prd_info
--- Verify there are no NULLs or duplicate primary keys (expect no rows returned)
+-- Table: silver.crm_prd_info
+-- Verify there are no NULLs or duplicates in the primary keys (expect no rows returned)
 SELECT
   prd_id,
   COUNT(*)
@@ -83,7 +83,7 @@ WHERE prd_end_dt < prd_start_dt;
 SELECT * FROM silver.crm_prd_info;
 
 
--- Checking table: silver.crm_sales_details
+-- Table: silver.crm_sales_details
 -- Validate date values and formats (adjust predicates to match your date encoding)
 SELECT
   sls_order_dt,
@@ -119,8 +119,8 @@ ORDER BY
 SELECT * FROM silver.crm_sales_details;
 
 
--- Checking table: silver.erp_cust_az12 (customer master from ERP)
--- Verify there are no duplicate customer IDs (expect no rows returned)
+-- Table: silver.erp_cust_az12 (customer master from ERP)
+-- Verify there are no NULLs or duplicates in the primary keys (expect no rows returned)
 SELECT
   CID,
   COUNT(*)
@@ -141,8 +141,8 @@ FROM silver.erp_cust_az12;
 SELECT * FROM silver.erp_cust_az12;
 
 
--- Checking table: silver.erp_loc_a101 (location/address reference table)
--- Verify there are no duplicate location IDs (expect no rows returned)
+-- Table: silver.erp_loc_a101 (location/address reference table)
+-- Verify there are no NULLs or duplicates in the primary keys (expect no rows returned)
 SELECT
   CID,
   COUNT(*)
