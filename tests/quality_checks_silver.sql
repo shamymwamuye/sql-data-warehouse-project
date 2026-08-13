@@ -8,7 +8,7 @@ This script runs a set of data quality checks against the "silver" schema to val
 consistency, completeness, and correctness of the loaded data.
 
 Checks included:
-- Null or duplicate primary keys
+- Nulls or duplicates in the primary keys
 - Leading/trailing whitespace in text fields
 - Value range and format validation (dates, numeric fields)
 - Logical date ordering (start <= end)
@@ -20,10 +20,7 @@ Usage:
 ==================================================================================================
 */
 
---
 -- Checking table: silver.crm_cust_info
---
-
 -- Verify there are no NULLs or duplicate primary keys (expect no rows returned)
 SELECT 
   cst_id,
@@ -49,10 +46,8 @@ FROM silver.crm_cust_info;
 -- Full table preview for manual inspection (use with caution on large tables)
 SELECT * FROM silver.crm_cust_info;
 
---
--- Checking table: silver.crm_prd_info
---
 
+-- Checking table: silver.crm_prd_info
 -- Verify there are no NULLs or duplicate primary keys (expect no rows returned)
 SELECT
   prd_id,
@@ -87,10 +82,8 @@ WHERE prd_end_dt < prd_start_dt;
 -- Full table preview for manual inspection (use with caution on large tables)
 SELECT * FROM silver.crm_prd_info;
 
---
--- Checking table: silver.crm_sales_details
---
 
+-- Checking table: silver.crm_sales_details
 -- Validate date values and formats (adjust predicates to match your date encoding)
 SELECT
   sls_order_dt,
@@ -125,11 +118,8 @@ ORDER BY
 -- Full table preview for manual inspection (use with caution on large tables)
 SELECT * FROM silver.crm_sales_details;
 
---
--- Checking table: silver.erp_cust_az12
--- (customer master from ERP)
---
 
+-- Checking table: silver.erp_cust_az12 (customer master from ERP)
 -- Verify there are no duplicate customer IDs (expect no rows returned)
 SELECT
   CID,
@@ -147,11 +137,11 @@ WHERE BDATE > GETDATE();
 SELECT DISTINCT GEN
 FROM silver.erp_cust_az12;
 
---
--- Checking table: silver.erp_loc_a101
--- (location/address reference table)
---
+-- Full table preview for manual inspection (use with caution on large tables)
+SELECT * FROM silver.erp_cust_az12;
 
+
+-- Checking table: silver.erp_loc_a101 (location/address reference table)
 -- Verify there are no duplicate location IDs (expect no rows returned)
 SELECT
   CID,
@@ -163,3 +153,6 @@ HAVING COUNT(*) > 1;
 -- Review distinct country codes/names to validate standardization
 SELECT DISTINCT CNTRY
 FROM silver.erp_loc_a101;
+
+-- Full table preview for manual inspection (use with caution on large tables)
+SELECT * FROM silver.erp_loc_a101;
