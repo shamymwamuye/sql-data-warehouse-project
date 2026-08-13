@@ -1,6 +1,6 @@
 /*
 ==================================================================================================
-DDL Script: Create Silver Schema Tables
+DDL Script: Create Silver Tables
 ==================================================================================================
 Script Purpose:
 - Define the Silver-layer tables used by the data warehouse ETL pipelines.
@@ -18,7 +18,7 @@ Conventions:
 ==================================================================================================
 */
 
--- Table: silver.crm_cust_info
+-- Remove and re-create customer master information table (silver.crm_cust_info)
 -- Purpose: Customer master information sourced from CRM.
 DROP TABLE IF EXISTS silver.crm_cust_info;
 GO
@@ -36,7 +36,7 @@ CREATE TABLE silver.crm_cust_info (
 GO
 
 
--- Table: silver.crm_prd_info
+-- Remove and re-create product master table (silver.crm_prd_info)
 -- Purpose: Product master information from CRM/source systems.
 DROP TABLE IF EXISTS silver.crm_prd_info;
 GO
@@ -55,8 +55,8 @@ CREATE TABLE silver.crm_prd_info (
 GO
 
 
--- Table: silver.crm_sales_details
--- Purpose: Sales transaction details ingested from CRM/source systems
+-- Remove and re-create sales transaction details (silver.crm_sales_details)
+-- Purpose: Sales transaction details ingested from CRM/source systems, cleaned/standardized in Silver
 DROP TABLE IF EXISTS silver.crm_sales_details;
 GO
 
@@ -75,8 +75,8 @@ CREATE TABLE silver.crm_sales_details (
 GO
 
 
--- Table: silver.erp_cust_az12
--- Purpose: Customer demographic data from ERP.
+-- Remove and re-create ERP customer demographics table (silver.erp_cust_az12)
+-- Purpose: Customer demographic data from ERP (source: erp_cust_az12).
 -- Notes: CID is the source system key; BDATE = birth date; GEN = gender.
 DROP TABLE IF EXISTS silver.erp_cust_az12;
 GO
@@ -90,8 +90,8 @@ CREATE TABLE silver.erp_cust_az12 (
 GO
 
 
--- Table: silver.erp_loc_a101
--- Purpose: Location / country data from ERP.
+-- Remove and re-create ERP location table (silver.erp_loc_a101)
+-- Purpose: Location / country data from ERP (source: erp_loc_a101).
 -- Notes: CID links to customer identifier in ERP; CNTRY stores country name or code.
 DROP TABLE IF EXISTS silver.erp_loc_a101;
 GO
@@ -104,8 +104,8 @@ CREATE TABLE silver.erp_loc_a101 (
 GO
 
 
--- Table: silver.erp_px_cat_giv2
--- Purpose: Product category mapping from ERP.
+-- Remove and re-create ERP product/category metadata (silver.erp_px_cat_giv2)
+-- Purpose: Product category mapping and metadata from ERP (source: erp_px_cat_giv2).
 -- Notes: Contains category/subcategory and maintenance information from the source.
 DROP TABLE IF EXISTS silver.erp_px_cat_giv2;
 GO
