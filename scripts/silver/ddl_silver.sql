@@ -1,31 +1,25 @@
 /*
 ==================================================================================================
-DDL: Silver Schema Tables
+DDL Script: Create Silver Schema Tables
 ==================================================================================================
-Purpose:
+Script Purpose:
 - Define the Silver-layer tables used by the data warehouse ETL pipelines.
 - This script drops existing Silver tables (if present) and recreates them with the canonical DDL.
 
 Usage:
 - Run in the context of the target database (e.g., the Data Warehouse database).
-- This file contains T-SQL batch separators (GO). Execute with a client that recognizes GO (sqlcmd, SSMS, Azure Data Studio).
+- This file contains T-SQL batch separators (GO). Execute with a client that 
+  recognizes GO (sqlcmd, SSMS, Azure Data Studio).
 - Running this script will irreversibly drop the listed tables; back up any production data before running.
 
 Conventions:
 - All Silver tables include dwh_create_date (DATETIME2) defaulting to GETDATE() to record load time.
 - Column names follow the project naming conventions: <prefix>_<name>.
-- Data types and lengths are chosen for expected values; adjust as necessary for production scale or target systems.
-
-Author: shamymwamuye
-Repository: shamymwamuye/sql-data-warehouse-project
-Original commit OID reference: 62850ed6...
-Date: 2026-08-13
 ==================================================================================================
 */
 
 -- Table: silver.crm_cust_info
--- Purpose: Customer master information sourced from CRM (Silver layer).
--- Notes: cst_key is the business key; dwh_create_date records the load timestamp.
+-- Purpose: Customer master information sourced from CRM.
 DROP TABLE IF EXISTS silver.crm_cust_info;
 GO
 
@@ -43,8 +37,7 @@ GO
 
 
 -- Table: silver.crm_prd_info
--- Purpose: Product master information from CRM/source systems (Silver layer).
--- Notes: prd_key is the business key; prd_cost stored as integer (consider DECIMAL for currency precision).
+-- Purpose: Product master information from CRM/source systems.
 DROP TABLE IF EXISTS silver.crm_prd_info;
 GO
 
@@ -63,8 +56,7 @@ GO
 
 
 -- Table: silver.crm_sales_details
--- Purpose: Sales transaction details ingested from CRM/source systems (Silver layer).
--- Notes: Numeric monetary values currently stored as INT; adjust to DECIMAL if cents are required.
+-- Purpose: Sales transaction details ingested from CRM/source systems
 DROP TABLE IF EXISTS silver.crm_sales_details;
 GO
 
@@ -84,7 +76,7 @@ GO
 
 
 -- Table: silver.erp_cust_az12
--- Purpose: Customer demographic data from ERP (Silver layer).
+-- Purpose: Customer demographic data from ERP.
 -- Notes: CID is the source system key; BDATE = birth date; GEN = gender.
 DROP TABLE IF EXISTS silver.erp_cust_az12;
 GO
@@ -99,7 +91,7 @@ GO
 
 
 -- Table: silver.erp_loc_a101
--- Purpose: Location / country data from ERP (Silver layer).
+-- Purpose: Location / country data from ERP.
 -- Notes: CID links to customer identifier in ERP; CNTRY stores country name or code.
 DROP TABLE IF EXISTS silver.erp_loc_a101;
 GO
@@ -113,7 +105,7 @@ GO
 
 
 -- Table: silver.erp_px_cat_giv2
--- Purpose: Product category mapping from ERP (Silver layer).
+-- Purpose: Product category mapping from ERP.
 -- Notes: Contains category/subcategory and maintenance information from the source.
 DROP TABLE IF EXISTS silver.erp_px_cat_giv2;
 GO
