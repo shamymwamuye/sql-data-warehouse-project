@@ -38,7 +38,8 @@ HAVING COUNT(*) > 1;
 SELECT
   cst_firstname
 FROM silver.crm_cust_info
-WHERE cst_firstname <> TRIM(cst_firstname);
+WHERE cst_firstname IS NOT NULL
+  AND cst_firstname <> TRIM(cst_firstname);
 
 -- Review distinct values for standardization and allowed values
 -- (expect a small, known set of values; investigate unexpected entries)
@@ -69,11 +70,13 @@ HAVING COUNT(*) > 1;
 -- Find product name or line values with unwanted leading/trailing spaces
 SELECT prd_nm
 FROM silver.crm_prd_info
-WHERE prd_nm <> TRIM(prd_nm);
+WHERE prd_nm IS NOT NULL
+  AND prd_nm <> TRIM(prd_nm);
 
 SELECT prd_line
 FROM silver.crm_prd_info
-WHERE prd_line <> TRIM(prd_line);
+WHERE prd_line IS NOT NULL
+  AND prd_line <> TRIM(prd_line);
 
 -- Check for NULL or negative costs (expect no rows returned)
 SELECT prd_cost
