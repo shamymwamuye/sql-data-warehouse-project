@@ -4,13 +4,13 @@ DDL Script: Create Bronze Tables
 ==================================================================================================
 
 Script Purpose:
-This script defines the DDL for the 'bronze' schema used as the raw ingestion layer
+This script defines the DDL statements for the 'bronze' schema used as the raw ingestion layer
 in the data warehouse. It drops each table if it already exists and (re)creates it
 with the original source columns and types.
 ==================================================================================================
 */
 
--- Remove and re-create customer information table from CRM source
+-- Drop and recreate the customer information table from the CRM source
 DROP TABLE IF EXISTS bronze.crm_cust_info;
 GO
 
@@ -25,7 +25,7 @@ CREATE TABLE bronze.crm_cust_info (
 );
 GO
 
--- Remove and re-create product information table from CRM product feed
+-- Drop and recreate the product information table from the CRM product feed
 DROP TABLE IF EXISTS bronze.crm_prd_info;
 GO
 
@@ -40,7 +40,7 @@ CREATE TABLE bronze.crm_prd_info (
 );
 GO
 
--- Remove and re-create sales transaction details from CRM sales feed
+-- Drop and recreate the sales transaction details table from the CRM sales feed
 DROP TABLE IF EXISTS bronze.crm_sales_details;
 GO
 
@@ -57,7 +57,7 @@ CREATE TABLE bronze.crm_sales_details (
 );
 GO
 
--- Remove and re-create ERP customer table (source: erp_cust_az12)
+-- Drop and recreate the ERP customer table (source: erp_cust_az12)
 DROP TABLE IF EXISTS bronze.erp_cust_az12;
 GO
 
@@ -68,7 +68,7 @@ CREATE TABLE bronze.erp_cust_az12 (
 );
 GO
 
--- Remove and re-create ERP location table (source: erp_loc_a101)
+-- Drop and recreate the ERP location table (source: erp_loc_a101)
 DROP TABLE IF EXISTS bronze.erp_loc_a101;
 GO
 
@@ -78,7 +78,7 @@ CREATE TABLE bronze.erp_loc_a101 (
 );
 GO
 
--- Remove and re-create ERP product/category metadata (source: erp_px_cat_giv2)
+-- Drop and recreate the ERP product/category metadata (source: erp_px_cat_giv2)
 DROP TABLE IF EXISTS bronze.erp_px_cat_giv2;
 GO
 
