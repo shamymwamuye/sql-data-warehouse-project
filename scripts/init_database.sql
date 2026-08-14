@@ -30,11 +30,11 @@ GO
 CREATE DATABASE DataWarehouse;
 GO
 
--- Use DataWarehouse
+-- Use the 'DataWarehouse' database
 USE DataWarehouse;
 GO
 
--- Create the Schemas
+-- Create the schemas
 CREATE SCHEMA bronze;
 GO
 
