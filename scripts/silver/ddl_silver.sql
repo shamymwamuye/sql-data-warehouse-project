@@ -4,7 +4,8 @@ DDL Script: Create Silver Tables
 ==================================================================================================
 Script Purpose:
 - Define the Silver-layer tables used by the data warehouse ETL pipelines.
-- This script drops existing Silver tables (if present) and recreates them with the canonical DDL.
+- This script drops existing Silver tables (if present) and recreates them using the project's 
+  standardized DDL definitions.
 
 Usage:
 - Run in the context of the target database (e.g., the Data Warehouse database).
@@ -13,12 +14,13 @@ Usage:
 - Running this script will irreversibly drop the listed tables; back up any production data before running.
 
 Conventions:
-- All Silver tables include dwh_create_date (DATETIME2) defaulting to GETDATE() to record load time.
+- All Silver tables include dwh_create_date (DATETIME2), which defaults to GETDATE(),
+  to record the row creation/load timestamp.
 - Column names follow the project naming conventions: <prefix>_<name>.
 ==================================================================================================
 */
 
--- Remove and re-create customer master information table (silver.crm_cust_info)
+-- Drop and recreate the customer master information table (silver.crm_cust_info)
 -- Purpose: Customer master information sourced from CRM.
 DROP TABLE IF EXISTS silver.crm_cust_info;
 GO
@@ -36,7 +38,7 @@ CREATE TABLE silver.crm_cust_info (
 GO
 
 
--- Remove and re-create product master table (silver.crm_prd_info)
+-- Drop and recreate the product master table (silver.crm_prd_info)
 -- Purpose: Product master information from CRM/source systems.
 DROP TABLE IF EXISTS silver.crm_prd_info;
 GO
@@ -55,8 +57,8 @@ CREATE TABLE silver.crm_prd_info (
 GO
 
 
--- Remove and re-create sales transaction details (silver.crm_sales_details)
--- Purpose: Sales transaction details ingested from CRM/source systems, cleaned/standardized in Silver
+-- Drop and recreate the sales transaction details table (silver.crm_sales_details)
+-- Purpose: Sales transaction details ingested from CRM/source systems and cleaned/standardized in Silver.
 DROP TABLE IF EXISTS silver.crm_sales_details;
 GO
 
@@ -75,7 +77,7 @@ CREATE TABLE silver.crm_sales_details (
 GO
 
 
--- Remove and re-create ERP customer demographics table (silver.erp_cust_az12)
+-- Drop and recreate the ERP customer demographics table (silver.erp_cust_az12)
 -- Purpose: Customer demographic data from ERP (source: erp_cust_az12).
 -- Notes: CID is the source system key; BDATE = birth date; GEN = gender.
 DROP TABLE IF EXISTS silver.erp_cust_az12;
@@ -90,8 +92,8 @@ CREATE TABLE silver.erp_cust_az12 (
 GO
 
 
--- Remove and re-create ERP location table (silver.erp_loc_a101)
--- Purpose: Location / country data from ERP (source: erp_loc_a101).
+-- Drop and recreate the ERP location table (silver.erp_loc_a101)
+-- Purpose: Location and country data from ERP (source: erp_loc_a101).
 -- Notes: CID links to customer identifier in ERP; CNTRY stores country name or code.
 DROP TABLE IF EXISTS silver.erp_loc_a101;
 GO
@@ -103,8 +105,7 @@ CREATE TABLE silver.erp_loc_a101 (
 );
 GO
 
-
--- Remove and re-create ERP product/category metadata (silver.erp_px_cat_giv2)
+-- Drop and recreate the ERP product/category metadata (silver.erp_px_cat_giv2)
 -- Purpose: Product category mapping and metadata from ERP (source: erp_px_cat_giv2).
 -- Notes: Contains category/subcategory and maintenance information from the source.
 DROP TABLE IF EXISTS silver.erp_px_cat_giv2;
@@ -118,4 +119,3 @@ CREATE TABLE silver.erp_px_cat_giv2 (
 	dwh_create_date DATETIME2 DEFAULT GETDATE()
 );
 GO
-
