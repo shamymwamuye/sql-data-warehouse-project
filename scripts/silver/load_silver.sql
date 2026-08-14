@@ -246,7 +246,7 @@ BEGIN
 			MAINTENANCE
 		)
 		SELECT
-			REPLACE(ID, '_', '-') AS ID,
+			ID,
 			CAT,
 			SUBCAT,
 			MAINTENANCE
