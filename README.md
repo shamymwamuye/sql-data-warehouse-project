@@ -1,63 +1,194 @@
-# Data Warehouse and Analytics Project
+# Data Warehouse and Analytics Project (SQL Server)
 
-Welcome to the **Data Warehouse and Analytics** Project repository!
+Welcome to the **Data Warehouse and Analytics Project** repository.
 
-This project demonstrates a comprehensive data warehousing and analytics solution, from building a data warehouse to generating actionable insights. Designed as a portfolio project, it highlights industry best practices in data engineering and analytics.
+This portfolio project demonstrates an end-to-end **data warehousing + analytics** workflow—starting from raw CSV extracts (ERP + CRM), building a **SQL Server** data warehouse using the **Medallion Architecture (Bronze/Silver/Gold)**, and finishing with analytics-ready models for reporting and insights.
+
+**Database name:** `DataWarehouse`  
+**Schemas:** `bronze`, `silver`, `gold`
+
+---
+
+## Quickstart (Run Order in SSMS)
+
+1. `scripts/init_database.sql` (creates/initializes `DataWarehouse`)
+2. `scripts/bronze/ddl_bronze.sql`
+3. `scripts/bronze/load_bronze.sql`
+4. `scripts/silver/ddl_silver.sql`
+5. `scripts/silver/load_silver.sql`
+6. `scripts/gold/ddl_gold.sql`
+7. (Optional tests) `tests/quality_checks_silver.sql`, `tests/quality_checks_gold.sql`
+
+---
+
+## Table of Contents
+- [Overview](#overview)
+- [Data Architecture](#data-architecture)
+- [Repository Structure](#repository-structure)
+- [Data Sources](#data-sources)
+- [How to Run (SSMS)](#how-to-run-ssms)
+- [Schemas & Layers](#schemas--layers)
+- [Data Quality Checks](#data-quality-checks)
+- [Documentation](#documentation)
+- [License](#license)
+
+---
+
+## Overview
+
+This project includes:
+
+- **Data Architecture** using Medallion layers (**Bronze**, **Silver**, **Gold**)
+- **ETL Pipelines** to ingest and transform raw CSV data into a structured warehouse
+- **Data Modeling** with an analytics-friendly **Star Schema** (facts & dimensions)
+- **Analytics & Reporting** using SQL queries on curated Gold tables
+
+Skills demonstrated:
+- SQL Development
+- Data Engineering & ETL
+- Data Modeling (Dimensional Modeling)
+- Data Quality / Testing
+- Analytics with SQL
+
+---
 
 ## Data Architecture
 
-The data architecture for this project follows Medallion Architecture with Bronze, Silver, and Gold layers:
+The warehouse follows the **Medallion Architecture**:
 
-- **Bronze Layer**: Stores raw data as-is from the source systems. Data is ingested from CSV files into a SQL Server database.
-- **Silver Layer**: Includes data cleansing, standardization, and normalization processes to prepare data for analysis.
-- **Gold Layer**: Houses business-ready data modeled into a star schema required for reporting and analytics.
+- **Bronze Layer (Raw)**  
+  Stores source data as-is (ingested from CSV into SQL Server).
 
-## Project Overview
+- **Silver Layer (Cleaned/Conformed)**  
+  Performs cleansing, standardization, and normalization to prepare for analysis.
 
-This project involves:
+- **Gold Layer (Business/Analytics)**  
+  Provides business-ready data modeled into a **Star Schema** for reporting and analytics.
 
-- **Data Architecture**: Designing a modern data warehouse using Medallion Architecture (Bronze, Silver, and Gold layers).
-- **ETL Pipelines**: Extracting, transforming, and loading data from source systems into the warehouse.
-- **Data Modeling**: Developing fact and dimension tables optimized for analytical queries.
-- **Analytics & Reporting**: Creating SQL-based reports and dashboards for actionable insights.
+Architecture diagrams are available under `docs/`.
 
-This repository is an excellent resource for professionals and students looking to showcase expertise in:
+---
 
-- SQL Development
-- Data Architecture
-- Data Engineering
-- ETL Pipeline Development
-- Data Modeling
-- Data Analytics
+## Repository Structure
 
-## Project Requirements
+​
+sql-data-warehouse-project/
+├─ datasets/
+│  ├─ source_crm/
+│  └─ source_erp/
+├─ docs/
+│  ├─ data_architecture.png
+│  ├─ data_flow.png
+│  ├─ data_integration.png
+│  ├─ data_model.png
+│  ├─ data_catalog.md
+│  └─ naming_conventions.md
+├─ scripts/
+│  ├─ bronze/
+│  │  ├─ ddl_bronze.sql
+│  │  └─ load_bronze.sql
+│  ├─ silver/
+│  │  ├─ ddl_silver.sql
+│  │  └─ load_silver.sql
+│  ├─ gold/
+│  │  └─ ddl_gold.sql
+│  └─ init_database.sql
+├─ tests/
+│  ├─ quality_checks_silver.sql
+│  └─ quality_checks_gold.sql
+└─ LICENSE
 
-### Building the Data Warehouse (Data Engineering)
+---
 
-**Objective**
+## Data Sources
 
-Develop a modern data warehouse using SQL Server to consolidate sales data, enabling analytical reporting and informed decision-making.
+This project integrates data from two source systems provided as CSV files:
 
-**Specifications**
+### CRM (`datasets/source_crm/`)
+- `cust_info.csv`
+- `prd_info.csv`
+- `sales_details.csv`
 
-- **Data Sources**: Import data from two source systems (ERP and CRM) provided as CSV files.
-- **Data Quality**: Cleanse and resolve data quality issues prior to analysis.
-- **Integration**: Combine both sources into a single, user-friendly data model designed for analytical queries.
-- **Scope**: Focus on the latest dataset only; historization of data is not required.
-- **Documentation**: Provide clear documentation of the data model to support both business stakeholders and analytics teams.
+### ERP (`datasets/source_erp/`)
+- `CUST_AZ12.csv`
+- `LOC_A101.csv`
+- `PX_CAT_G1V2.csv`
 
-### BI: Analytics & Reporting (Data Analysis)
+---
 
-**Objective**
+## How to Run (SSMS)
 
-Develop SQL-based analytics to deliver detailed insights into:
+### Prerequisites
+- SQL Server (local or remote instance)
+- **SQL Server Management Studio (SSMS)**
+- Access to this repo’s `datasets/` folder locally (for CSV loads)
 
-- Customer Behavior
-- Product Performance
-- Sales Trends
+### Steps
+1. **Clone the repository**
+​
+git clone https://github.com/shamymwamuye/sql-data-warehouse-project.git
+cd sql-data-warehouse-project
 
-These insights empower stakeholders with key business metrics, enabling strategic decision-making.
+2. **Initialize the database**
+   - Open SSMS and connect to your SQL Server instance
+   - Run:
+     - `scripts/init_database.sql`
+   - This initializes the database: `DataWarehouse`
+
+3. **Build + load Bronze (raw layer)**
+   - Run:
+     - `scripts/bronze/ddl_bronze.sql`
+     - `scripts/bronze/load_bronze.sql`
+
+4. **Build + load Silver (cleaned layer)**
+   - Run:
+     - `scripts/silver/ddl_silver.sql`
+     - `scripts/silver/load_silver.sql`
+
+5. **Build Gold (analytics layer / star schema)**
+   - Run:
+     - `scripts/gold/ddl_gold.sql`
+
+> If your load scripts reference local file paths, update them to match your machine’s absolute path to the `datasets/` folder.
+
+---
+
+## Schemas & Layers
+
+This warehouse uses separate schemas to keep each layer clean and discoverable:
+
+- `bronze.*` — raw ingested tables from source files (minimal/no transformation)
+- `silver.*` — cleansed, standardized, conformed tables
+- `gold.*` — business-ready dimensional model (facts/dimensions) for analytics
+
+---
+
+## Data Quality Checks
+
+Quality checks are included as SQL scripts:
+
+- Silver checks:
+  - `tests/quality_checks_silver.sql`
+- Gold checks:
+  - `tests/quality_checks_gold.sql`
+
+Run these in SSMS after each layer load to validate cleanliness, consistency, and model integrity.
+
+---
+
+## Documentation
+
+Project documentation and diagrams are located in `docs/`, including:
+
+- `data_architecture.png` — architecture overview
+- `data_flow.png` — pipeline flow
+- `data_integration.png` — source integration
+- `data_model.png` — dimensional model / star schema
+- `data_catalog.md` — dataset/table catalog
+- `naming_conventions.md` — naming rules used in the warehouse
+
+---
 
 ## License
 
-This project is licensed under the MIT License. You are free to use, modify, and share this project with proper attribution.
+This project is licensed under the **MIT License**. You are free to use, modify, and share it with proper attribution.
