@@ -103,6 +103,11 @@ sql-data-warehouse-project/
 ├─  tests/
 │  ├─  quality_checks_silver.sql
 │  └─  quality_checks_gold.sql
+├─  powerbi/
+│  ├─  screenshots/
+│  │  └─ sales_performance_dashboard.png
+│  ├─  Sales_Performance_Dashboard.pbix
+│  └─  README.md
 └─  LICENSE
 ```
 
@@ -242,6 +247,8 @@ the Gold layer of the SQL Server Data Warehouse.
 ### Project Files
 
 [View Power BI Dashboard](powerbi/Sales_Performance_Dashboard.pbix)
+
+---
 
 ## 📄 License
 
