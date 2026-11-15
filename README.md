@@ -207,6 +207,42 @@ All project documentation and diagrams are located in `docs/`, including:
 
 ---
 
+## Power BI – Sales Performance Dashboard
+
+### Overview
+
+Developed an interactive Power BI dashboard using
+the Gold layer of the SQL Server Data Warehouse.
+
+### Key Performance Indicators
+
+- Total Sales
+- Total Orders
+- Total Customers
+- Average Order Value
+
+### Dashboard Analysis
+
+- Sales performance by country
+- Customer distribution by gender
+- Monthly and yearly sales trends
+- Sales performance by product category
+
+### Tools Used
+
+- Microsoft SQL Server
+- Power BI Desktop
+- DAX
+- Power Query
+
+### Dashboard Preview
+
+![Sales Performance Dashboard](powerbi/screenshots/sales_dashboard.png)
+
+### Project Files
+
+[View Power BI Dashboard](powerbi/Sales_Performance_Dashboard.pbix)
+
 ## 📄 License
 
 📜 This project is licensed under the **MIT License**. You are free to use, modify, and share it with proper attribution.
