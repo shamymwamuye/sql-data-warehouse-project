@@ -125,12 +125,6 @@ The headline numbers were cross-checked against SQL queries run directly on the 
 
 To transform structured data warehouse information into interactive visual reports that support business performance monitoring, sales analysis, and data-driven decision-making.
 
-## Possible Next Steps
-
-- Add a second report page for year-over-year growth and top products
-- Switch to DirectQuery to compare it with Import mode
-- Load data incrementally instead of reloading the whole warehouse
-
 ## Project Files
 
 - `Sales_Performance_Dashboard.pbix`: Power BI report file.
